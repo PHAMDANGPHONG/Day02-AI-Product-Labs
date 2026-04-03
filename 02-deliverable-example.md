@@ -1,144 +1,156 @@
-# Deliverable 2: 02-deep-dive-report.md
-**Bài toán:** Đọc 2-3 paper tiếng Anh mỗi tuần, mất rất nhiều thời gian để chắt lọc ra phương pháp luận và đối chiếu với mô hình đang làm.
+## Context: Tôi là ai?
 
----
+Tôi là **Phong**, 21 tuổi, sinh viên năm cuối trường Đại học Công nghệ. Mỗi tuần tôi phải:
 
-## Phase 4 — DEEP-DIVE (Phân tích chuyên sâu)
+Đọc các bài báo khoa học (paper) để hoàn thiện khóa luận tốt hơn.
 
-### 4.1 Current-State Workflow (Luồng công việc hiện tại)
+Viết "Weekly Report" gửi cho giảng viên hướng dẫn (GVHD).
 
-Luồng xử lý hàng tuần để cập nhật kiến thức từ các paper mới:
+Lên kế hoạch công việc và mục tiêu cho những tuần tiếp theo.
 
-```text
-┌─────────────┐     ┌─────────────┐     ┌──────────────┐     ┌──────────────────┐
-│ Bước 1      │     │ Bước 2      │     │ Bước 3       │     │ Bước 4           │
-│ Tìm paper   │     │ Chọn 2-3    │     │ Đọc sâu và   │     │ So sánh với      │
-│             │ ──→ │ paper/tuần  │ ──→ │ tìm phần nổi │ ──→ │ phương pháp của  │
-│ Ai: Phong   │     │ Ai: Phong   │     │ bật          │     │ mình             │
-│ ⏱ 10 min    │     │ ⏱ 10 min   │     │ Ai: Phong    │     │ Ai: Phong       │
-│ In: ArXiv   │     │ In: 50+ ppr │     │ ⏱ 40 min 🔴 │     │ ⏱ 40 min 🔴    │
-│ Out: 50+ ppr│     │ Out: 2-3 ppr│     │ In: 2-3 ppr  │     │ In: Repo cá nhân │
-└─────────────┘     └─────────────┘     └──────────────┘     └──────────────────┘
-                                                                      │
-                                                                      ▼
-                                             ┌──────────────────┐     ┌──────────────────┐
-                                             │ Bước 6           │     │ Bước 5           │
-                                             │ Ghi lại và paste │ ─── │ Tóm tắt bản so   │
-                                             │ vào report       │     │ sánh             │
-                                             │ Ai: Phong        │     │ Ai: Phong        │
-                                             │ ⏱ 10 min         │     │ ⏱ 15 min         │
-                                             └──────────────────┘     └──────────────────┘
+Ngoài ra tôi còn phải trực tiếp code thực nghiệm mô hình trên Kaggle, xử lý dataset, dọn dẹp dữ liệu, và tự quản lý thời gian. Bài toán tôi mang vào lab hôm nay đến từ chính quá trình "chạy nước rút" cho project tốt nghiệp của mình.
 
-🔴 = Bottleneck (Điểm nghẽn)
-⏱ Tổng thời gian: ~125 phút / chu trình (trung bình ~90 phút để hoàn thành việc phân tích sâu 1 paper)
-```
+# Phase 1 — SCAN: Tìm kiếm cơ hội
 
-**Ghi chú bottleneck:**
-* Bước 3 và Bước 4 chiếm phần lớn thời gian (80 phút). Đọc sâu một tài liệu học thuật tiếng Anh để mò ra đúng phần Methodology cốt lõi rất dễ gây kiệt sức.
-* Việc đối chiếu chéo (cross-reference) giữa các kỹ thuật trong paper mới với cấu trúc của repo cá nhân đòi hỏi sự tập trung cao độ, dễ bị "ngợp" thông tin.
+Dùng **4 Lenses** để quét
 
----
+| #  | Lens               | Bài toán |
+|----|--------------------|----------|
+| 1  | Lặp lại            | Mỗi cuối tuần phải chụp ảnh màn hình log/kết quả train mô hình trên Kaggle để paste vào Word làm báo cáo tiến độ |
+| 2  | Lặp lại            | Phải viết email gửi GVHD vào mỗi tối Chủ Nhật để đính kèm report và xin lịch hẹn meeting tuần tới — cùng một format văn phong, chỉ đổi số liệu |
+| 3  | Tốn thời gian      | Đọc 2-3 paper tiếng Anh mỗi tuần, mất rất nhiều thời gian để chắt lọc ra phương pháp luận và đối chiếu với mô hình đang làm |
+| 4  | AI có thể tốt hơn  | Quá trình tìm kiếm và xử lý lỗi (debug) khi chạy thử mô hình đang làm thủ công tốn hàng giờ, AI có thể phân tích log lỗi nhanh hơn. |
+| 5  | Pain từ người khác | Lúc gặp GVHD bị hỏi: "Tuần vừa rồi độ chính xác của model cải thiện được bao nhiêu % so với baseline tuần trước?" mà chưa paste vào report thì không nhớ ngay để trả lời |
+| 6  | Tốn thời gian      | Trích xuất và định dạng lại các trích dẫn (citation) từ các bài báo khoa học |
 
-### 4.2 Problem Statement & Metrics (6-field)
 
-| Field | Nội dung |
-|-------|----------|
-| **Actor / Operator** | Phong (Sinh viên nghiên cứu). |
-| **Current Workflow** | Tìm paper trên ArXiv → Chọn lọc 2-3 paper → Đọc sâu tìm Methodology → Đối chiếu kỹ thuật với repo cá nhân → Tóm tắt → Ghi report. Tổng cộng 6 bước, thủ công 100%. |
-| **Bottleneck** | Bước 3 & 4: Đọc sâu paper tiếng Anh và đối chiếu kiến trúc chiếm tới 80 phút. Các paper thường rất dài và rườm rà, khó tìm nhanh phần trọng tâm về Visual Question Answering (VQA). |
-| **Impact** | Mất quá nhiều thời gian (3-4 tiếng mỗi tuần chỉ để xử lý vài paper), làm chậm tiến độ viết code, chạy experiment và hoàn thiện report nghiên cứu. |
-| **Success Metric** | Giảm tổng thời gian đọc hiểu và so sánh 1 paper từ 90 phút xuống **dưới 20 phút**. |
-| **Operational Boundary** | AI được phép đọc file PDF và nhận context của model Moondream2 để tóm tắt và trích xuất. AI **KHÔNG** được tự ý bịa ra (hallucinate) các phương pháp không có trong paper. Phong phải là người đọc và duyệt lại bản tóm tắt cuối cùng trước khi đưa vào report. |
+# Phase 2 — QUICK-ASSESS: 3 Quick Problem Cards
 
-**Sub-goals Decomposition:**
-* *TRƯỚC khi dùng AI:* Lọc và tải đúng file PDF của paper cần đọc. Soạn sẵn một file text mô tả ngắn gọn kiến trúc hiện tại để làm "System Prompt" cho AI.
-* *TRONG khi dùng AI:* Review các điểm methodology mà AI trích xuất để đảm bảo không bỏ sót keyword quan trọng về VQA.
+Chọn top 3 từ list:
+- **#2 — Tổng hợp Weekly Report cho GVHD**
+- **#3 — Đọc và chắt lọc Paper**
+- **#4 — Debug lỗi chạy mô hình**
 
-**Metrics:**
-
-| Loại | Metric | Ngưỡng (Threshold) |
-|------|--------|--------|
-| **Efficiency (Thời gian)** | Thời gian đọc sâu, so sánh và tóm tắt 1 paper | 90 phút → < 20 phút |
-| **Quality (Chất lượng)** | Tỉ lệ trích xuất đúng phương pháp cốt lõi | Không bỏ sót thông tin quan trọng (Review thủ công đạt 100% khớp ý tưởng) |
-
----
-
-### 4.3 Research
-
-**Existing solution:**
-* **ChatPDF / SciSpace:**
-    * *Điểm mạnh:* Cho phép upload PDF và hỏi đáp trực tiếp, tìm thông tin cực nhanh.
-    * *Điểm yếu:* Thiếu context cá nhân. Các công cụ này chỉ hiểu nội dung trong paper đó, không tự động biết "phương pháp của mình" là gì để đối chiếu sâu trừ khi phải prompt rất dài và thủ công mỗi lần.
-
-**Case study:**
-* **Dùng LLM có Context Window lớn (Gemini 1.5 Pro / Claude 3.5 Sonnet):**
-    * *Họ làm gì:* Upload trực tiếp file PDF của paper cùng với file `README.md` hoặc tài liệu mô tả kiến trúc vào chung một phiên chat. Yêu cầu LLM đóng vai trò Research Assistant, trích xuất Methodology và lập bảng so sánh điểm khác biệt.
-    * *Kết quả:* LLM thực hiện so sánh đối chiếu kỹ thuật (như cơ chế Attention, cách encode ảnh/text) cực kỳ chính xác.
-
-**Bài học rút ra cho bài toán của mình:**
-Không cần xây dựng hệ thống phức tạp, chỉ cần thiết kế một **Prompt Template** chuẩn, đính kèm file PDF và context của Moondream2. Giải pháp là **LLM Feature (Boost)**.
-
----
-
-### 4.4 Future-State Flow + AI Fit
-
-**1. AI Fit Check:**
-Bài toán nằm ở ô: **Complexity thấp + Ambiguity cao → LLM Feature**
-*(Workflow chỉ là nhét text vào và lấy text ra (complexity thấp), nhưng việc tóm tắt và so sánh kỹ thuật học thuật đòi hỏi khả năng xử lý ngôn ngữ và suy luận sâu (ambiguity cao)).*
-
-**2. Future-State Flow:**
+## Card #1 — Tổng hợp Weekly Report cho GVHD
 
 ```text
-┌─────────────┐     ┌─────────────┐       ┌──────────────────┐
-│ Bước 1      │     │ Bước 2      │       │ Bước 3           │
-│ Tìm & Chọn  │ ──→ │ 🔵 AI đọc    │  ──→ │ 🔵 AI đối chiếu với │
-│ 2-3 paper   │     │ paper & trích│      │ phương pháp của  │
-│ Ai: Phong   │     │ xuất phần nổi bật │  │ mình           │
-│ ⏱ 20 min    │     │ ⏱ 5-10 min      │   │ ⏱ 5-10 min       │
-└─────────────┘     └─────────────┘        └──────────────────┘
-                                                      │
-                                                      ▼
-                    ┌─────────────┐     ┌──────────────────┐
-                    │ Bước 5      │     │ Bước 4           │
-                    │ Paste vào   │ ─── │ 🟢 tóm tắt      │
-                    │ Report      │     │                  │
-                    │ Ai: Phong   │     │ Ai: Phong        │
-                    │ ⏱ 5 min     │     │ ⏱ 10 min        │
-                    └─────────────┘     └──────────────────┘
-                    
-➡️ Fallback: Nếu AI tóm tắt sai lệch hoặc tối nghĩa →  tự mở PDF ra đọc phần Methodology (nhưng ít nhất AI đã chỉ ra nó nằm ở trang nào, vẫn tiết kiệm thời gian).
+┌──────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #1                            │
+│                                                  │
+│ Bài toán: Mỗi tối Chủ Nhật, viết email báo cáo   │
+│ tiến độ và xin lịch hẹn GVHD mất 60 phút do      │
+│ phải tổng hợp log trên Kaggle và chỉnh format    │
+│                                                  │
+│ Ai đang đau? Tôi (SV), GVHD (đọc report dài)     │
+│                                                  │
+│ Workflow hiện tại:                               │
+│   1. Mở Kaggle copy log/kết quả thực nghiệm      │
+│   → 2. Viết nháp tóm tắt việc đã làm             │
+│   → 3. Gạch đầu dòng plan tuần tới               │
+│   → 4. Gửi email cho GVHD                        │
+│                                                  │
+│ Bước nào tốn nhất? Bước 2 & 3 (⏱ 40 min/lần)    │
+│                                                  │
+│ AI có thể giúp ở bước nào? Bước 2 & 3            │
+│ (Biến log kỹ thuật khô khan thành report)        │
+│                                                  │
+│ Đo thành công bằng gì?                           │
+│ Giảm thời gian làm report từ 40 min → 15 min     │
+│                                                  │
+│ Quick gut: ☑ LLM Feature                        │
+└──────────────────────────────────────────────────┘
 ```
-*Tổng thời gian mới cho việc xử lý 1 paper (sau khi đã chọn): ~20-25 phút (Giảm từ 90 phút).*
 
-**3. Underspecification Check:**
+## Card #2 — Đọc và chắt lọc Paper
 
-| Điều chưa rõ | Hậu quả | Cách tìm ra |
-|---|---|---|
-| AI có nhầm lẫn thuật ngữ của paper với các mô hình khác không? | Tóm tắt sai kiến trúc, dẫn đến so sánh sai lệch | Đọc chéo lại Abstract của paper trong 2 phút để verify output của AI. |
-| Độ dài của paper vượt quá context limit? | Báo lỗi hoặc AI cắt bớt thông tin quan trọng ở phần sau. | Sử dụng các mô hình hỗ trợ >100k tokens. |
+```text
+┌──────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #2                            │
+│                                                  │
+│ Bài toán: Đọc 5-7 paper tiếng Anh mỗi tuần mất   │
+│ quá nhiều thời gian để tìm ra phần methodology   │
+│ và đối chiếu với model đang làm             │
+│                                                  │
+│ Ai đang đau? Tôi (SV nghiên cứu)                 │
+│                                                  │
+│ Workflow hiện tại:                               │
+│   1. Tải PDF → 2. Đọc Abstract & chắt lọc paper  │
+│   → 3. Highlight phần Methodology (đặc biệt là   │
+│   phần được cải tiến) → 4.  So sánh với phương   │
+│   pháp của mình → 5.Tạo bảng so sánh             |
+│   → 6. paste vào report                          |
+│                                                  │
+│ Bước nào tốn nhất? Bước 2 & 3 (⏱ ~90 min)       │
+│                                                  │
+│ AI có thể giúp ở bước nào? Bước 3 & 4            │
+│ (Trích xuất methodology & tóm tắt ý chính)       │
+│                                                  │
+│ Đo thành công bằng gì?                           │
+│ Giảm thời gian xử lý 1 paper từ 90 min → 25 min  │
+│                                                  │
+│ Quick gut: ☑ LLM Feature (Summarization)         │
+└──────────────────────────────────────────────────┘
+```
+
+## Card #3 — Debug lỗi chạy mô hình
+```text
+┌──────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #3                            │
+│                                                  │
+│ Bài toán: Tìm và fix lỗi khi train/test mô       │
+│ hình trên dataset VizWiz tốn hàng giờ tra cứu    │
+│ trên StackOverflow hoặc tài liệu                 │
+│                                                  │
+│ Ai đang đau? Tôi (người trực tiếp code)          │
+│                                                  │
+│ Workflow hiện tại:                               │
+│   1. Mô hình báo lỗi (VD: dimension mismatch)    │
+│   → 2. Copy mã lỗi → 3. Search Google            │
+│   → 4. Đọc các thread giải pháp                  │
+│   → 5. Sửa code và chạy lại thử                  │
+│                                                  │
+│ Bước nào tốn nhất? Bước 3 & 4 (⏱ 30-60 min/lỗi) │
+│                                                  │
+│ AI có thể giúp ở bước nào? Bước 3, 4, 5          │
+│ (Phân tích lỗi dựa trên context code hiện tại)   │
+│                                                  │
+│ Đo thành công bằng gì?                           │
+│ Giảm thời gian tìm giải pháp bug từ 45 min       │
+│ → dưới 10 min                                    │
+│                                                  │
+│ Quick gut: ☑ Agent (cần đọc context code, log)   │
+└──────────────────────────────────────────────────┘
+```
 
 ---
 
-## Phase 5 — EVALUATE (Đánh giá & Quyết định)
+# Phase 3 — PITCH-CHALLENGE-VOTE
 
-### G4. Decision Quality
+## Cards bị loại
 
-**AI Readiness Checklist:**
+| Card bị loại | Lý do |
+|--------------|-------|
+| #1 — Tổng hợp Weekly Report cho GVHD | Tác động thấp đến kết quả nghiên cứu. Việc tối ưu nó chỉ giúp tiết kiệm thời gian viết, nhưng không giúp cải thiện độ chính xác của mô hình hay chiều sâu của luận văn |
+| #3 — Debug lỗi chạy mô hình | Độ tin cậy thấp. AI dễ gây ra "hallucination" khi giải quyết các lỗi logic sâu hoặc lỗi môi trường đặc thù, có thể làm tốn thời gian hơn nếu sửa sai hướng. |
 
-| # | Câu hỏi | Kết quả | Ghi chú |
-|---|---------|---------|---------|
-| 1 | Có data/input đủ chất lượng? | **Yes** | File PDF paper từ ArXiv rất chuẩn, text extract dễ dàng. |
-| 2 | Có metric rõ? | **Yes** | 90 phút → ~25 phút. |
-| 3 | Sai thì hậu quả có chấp nhận được? | **Yes** | Phong là người review cuối, sai thì tự đọc lại, rủi ro có thể chấp nhận. |
-| 4 | User sẵn sàng dùng AI? | **Yes** | Phong rất muốn thoát khỏi việc đọc chữ chay. |
-| 5 | Có resource để maintain? | **Yes** | Chỉ cần dùng Web UI của các AI sẵn có (Gemini/ChatGPT/Claude), không cần code app riêng. |
+### Bài học rút ra từ quá trình đánh giá (Lessons Learned)
 
-**Optimization Check:**
-* **Lợi ích:** Tiết kiệm ~70 phút cho mỗi paper. Có thêm thời gian để tập trung vào việc implement code.
-* **Rủi ro:** AI "hallucinate" ra các layer hoặc loss function không có trong paper để cố làm cho bài so sánh trông logic.
+#### A. Ưu tiên "Gốc" hơn "Ngọn"
+Tự động hóa những việc râu ria (viết email, format báo cáo) mang lại cảm giác thảnh thơi giả tạo. Bài học lớn nhất là AI nên được dùng để **thông minh hóa bộ não** (như Card #2: thẩm thấu Methodology từ paper) 
+#### B. Quản trị rủi ro: "Verify, don't just Trust"
+Đừng biến AI thành "người quyết định" trong các khâu kỹ thuật trọng yếu. Với các hệ thống model phức tạp, AI chỉ đóng vai trò tư vấn hướng đi. Người nghiên cứu phải nắm vững logic để kiểm soát các gợi ý, tránh việc sa lầy vào những lỗi sai dây chuyền do AI tạo ra khi nó không hiểu hết bối cảnh phần cứng.
 
-**Quyết định:**
-**GO (Thực hiện ngay lập tức)**
+#### C. Đánh giá Chi phí cơ hội (Opportunity Cost)
+Thời gian ngồi tinh chỉnh Prompt để AI làm những việc vụn vặt đôi khi còn lâu hơn tự làm tay.
+# Phase 4 — DEEP-DIVE (team)
 
-**Justify (Lý do):**
-Bài toán đáp ứng 5/5 tiêu chí Readiness. Rủi ro tác động kinh doanh/vận hành là bằng không do đây là workflow cá nhân (research). Chỉ cần tạo một Prompt Template cố định và áp dụng ngay trong tuần tới để đo lường thực tế xem thời gian có giảm đúng xuống ~25 phút như kỳ vọng hay không.
+# Phase 5 — EVALUATE (team)
+
+# Phase 6 — AI Support Log (Log Phase Reflection)
+
+| Câu hỏi | Trả lời |
+|---------|---------|
+| AI giúp gì? | Gợi ý cấu trúc 4 Lenses để quét vấn đề; Brainstorm nhanh các "nỗi đau" tiềm ẩn trong lab; Dự thảo sơ bộ các bước trong Workflow cho từng Card |
+| AI sai ở đâu? | Đưa ra các con số thời gian (60p, 90p) chỉ mang tính ước lượng lý thuyết; Các giải pháp cho Card #3 (Debug) quá màu hồng, chưa tính đến việc lỗi do server Kaggle hoặc CUDA mismatch mà AI không can thiệp được |
+| Nhóm phải sửa gì bằng tay? | Card #1: Phải ngồi bấm giờ thực tế lúc soạn email để ra số 40 phút; Card #2: Tự phân loại lại các mục cần trích xuất (Methodology, Baseline) vì AI tóm tắt quá dàn trải; Card #3: Xác định rõ ranh giới (boundary) là AI chỉ gợi ý hướng fix, không được để AI tự sửa code trực tiếp. |
+| Prompt hay nhất? | "Đóng vai một Researcher, hãy so sánh phương pháp của Paper A với kiến trúc model và lập bảng các điểm khác biệt về Layer Tuning." |
