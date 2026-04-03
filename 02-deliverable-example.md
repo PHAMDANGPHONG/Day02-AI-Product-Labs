@@ -1,586 +1,144 @@
-# Deliverable Example — Tổng hợp báo cáo tuần (v2 theo rubric mới)
-
-> Ví dụ bài nộp hoàn chỉnh từ đầu đến cuối lab, đã được chỉnh lại để **khớp với metric/rubric mới**:
-> - tách rõ phần nào là **cá nhân**
-> - phần nào là **nhóm**
-> - vì sao bài này đạt mức **Hiểu đầy đủ / gần Xuất sắc**
->
-> Mục tiêu của file này không phải để học viên “copy”, mà để:
-> 1. thấy output tốt trông như thế nào,
-> 2. hiểu **điểm sẽ được chấm ở đâu**,
-> 3. phân biệt bài làm “đủ dùng” với bài làm “thật sự chặt”.
+# Deliverable 2: 02-deep-dive-report.md
+**Bài toán:** Đọc, trích xuất Methodology từ Paper tiếng Anh và đối chiếu với model Moondream2
 
 ---
 
-## Cách đọc file ví dụ này
+## Phase 4 — DEEP-DIVE (Phân tích chuyên sâu)
 
-Trong rubric mới, điểm được chia theo hướng:
+### 4.1 Current-State Workflow (Luồng công việc hiện tại)
 
-- **Điểm cá nhân (40%)**
-  - Scan breadth + Quick Problem Cards
-  - Pitch + Challenge participation
-  - AI Support Log (log Phase 6 — Reflection)
-  - Individual understanding check
-- **Điểm nhóm (60%)**
-  - Workflow Mapping
-  - Problem Statement + Metrics + Boundary
-  - AI Fit + Alternatives + Future Flow
-  - Decision Quality
-
-Vì vậy, trong file ví dụ này sẽ có 2 loại note:
-
-- **[INDIVIDUAL SIGNAL]** = tín hiệu giúp học viên lấy điểm cá nhân
-- **[GROUP SIGNAL]** = tín hiệu giúp nhóm lấy điểm chung
-
----
-
-## Context: Tôi là ai?
-
-Tôi là **Minh**, 26 tuổi, Junior Product Manager tại một công ty SaaS ~50 người. Mỗi tuần tôi phải:
-
-- Tổng hợp số liệu từ nhiều nguồn (Google Sheets, Jira, Slack)
-- Viết "Weekly Report" gửi cho Engineering Manager + CEO
-- Theo dõi OKR tiến độ sprint
-
-Ngoài ra tôi còn review PRD, họp daily standup, sync cross-team. Bài toán tôi mang vào lab hôm nay đến từ chính công việc hàng ngày.
-
-**Vì sao context này tốt cho lab?**
-- Có actor rõ
-- Có workflow thật
-- Có pain lặp lại
-- Có metric đo được
-- Không quá rộng
-
-**[INDIVIDUAL SIGNAL]** Một bài toán tốt thường đến từ trải nghiệm thật, không phải ý tưởng “nghe hay”.
-**[GROUP SIGNAL]** Một nhóm dễ deep-dive tốt hơn khi chọn bài toán mà ít nhất 1 người hiểu workflow thật.
-
----
-
-# Phase 1 — SCAN: Tìm kiếm cơ hội
-
-Dùng **4 Lenses** để quét. Ghi mọi thứ, không filter.
-
-| #  | Lens               | Bài toán |
-|----|--------------------|----------|
-| 1  | Lặp lại            | Mỗi thứ Hai tổng hợp Weekly Report từ 4 nguồn dữ liệu |
-| 2  | Lặp lại            | Copy-paste sprint velocity từ Jira vào Slides mỗi tuần |
-| 3  | Tốn thời gian      | Review 10-15 trang PRD mỗi tuần, mất 45 phút/bản để hiểu context |
-| 4  | Tốn thời gian      | Viết meeting notes sau mỗi buổi họp cross-team (30 min/buổi) |
-| 5  | AI có thể tốt hơn  | App quản lý task (Notion) không gợi ý priority dựa trên deadline |
-| 6  | AI có thể tốt hơn  | Slack search quá tệ — tìm quyết định cũ mất 10-15 phút |
-| 7  | Pain từ người khác | Designer phàn nàn: spec từ PM mập mờ, phải hỏi lại 2-3 lần |
-| 8  | Pain từ người khác | CEO hỏi: "Tuần này team làm gì?" mà report chưa sẵn thì không trả lời được |
-| 9  | Tốn thời gian      | Mỗi tháng tổng hợp monthly KPI từ 3 dashboard khác nhau |
-| 10 | Lặp lại            | Gửi standup update trên Slack mỗi sáng — cùng format, copy-paste |
-
-**Tổng:** 10 bài toán.
-
-### Vì sao phần SCAN này đạt điểm cao
-- Có **10 bài toán**, vượt ngưỡng tối thiểu
-- Dùng đủ **4 lenses**
-- Có bài toán từ bản thân và từ người khác
-- Có breadth trước khi converge
-
-**[INDIVIDUAL SIGNAL]**
-Một bài scan mạnh không chỉ là “đủ 5 ý”, mà phải cho thấy:
-- breadth,
-- đa dạng lens,
-- có pain thật,
-- có khả năng chọn được 1 bài toán để đi tiếp.
-
-**Nếu chỉ scan kiểu yếu**
-- 5 ý quá giống nhau
-- chỉ dùng 1 lens
-- toàn ý tưởng solution-first như “làm chatbot cho trường”
-→ thì thường chỉ đạt mức pass tối thiểu.
-
----
-
-# Phase 2 — QUICK-ASSESS: 3 Quick Problem Cards
-
-Chọn top 3 từ list:
-- **#1 — Weekly Report**
-- **#3 — Review PRD**
-- **#6 — Slack Search**
-
-## Card #1 — Tổng hợp Weekly Report
-
-```text
-┌──────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #1                            │
-│                                                  │
-│ Bài toán: Mỗi thứ Hai tổng hợp Weekly Report    │
-│ từ 4 nguồn, mất 90 phút, hay bị muộn deadline   │
-│                                                  │
-│ Ai đang đau? PM (tôi), CEO (chờ report)          │
-│                                                  │
-│ Workflow hiện tại:                                │
-│   1. Mở Jira export data                         │
-│   → 2. Mở Google Sheets lấy metrics              │
-│   → 3. Đọc Slack recap tuần                      │
-│   → 4. Viết narrative trong Google Docs          │
-│   → 5. Gửi email cho stakeholders                │
-│                                                  │
-│ Bước nào tốn nhất? Bước 4 (⏱ 40 min/lần)        │
-│                                                  │
-│ AI có thể giúp ở bước nào? Bước 3-4              │
-│ (tổng hợp thông tin + draft narrative)           │
-│                                                  │
-│ Đo thành công bằng gì?                           │
-│ Giảm tổng thời gian từ 90 min → dưới 30 min     │
-│                                                  │
-│ Quick gut: ☑ LLM Feature                         │
-└──────────────────────────────────────────────────┘
-```
-
-## Card #2 — Review PRD
-
-```text
-┌──────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #2                            │
-│                                                  │
-│ Bài toán: Review PRD mất 45 min/bản vì phải     │
-│ đọc hết 10-15 trang để hiểu context trước khi   │
-│ comment                                          │
-│                                                  │
-│ Ai đang đau? PM reviewer, Design lead            │
-│                                                  │
-│ Workflow hiện tại:                                │
-│   1. Nhận PRD link → 2. Đọc toàn bộ             │
-│   → 3. Ghi chú câu hỏi → 4. Comment trên doc    │
-│                                                  │
-│ Bước nào tốn nhất? Bước 2 (⏱ 30 min/lần)        │
-│                                                  │
-│ AI có thể giúp ở bước nào? Bước 2               │
-│ (tóm tắt + highlight gaps)                      │
-│                                                  │
-│ Đo thành công bằng gì?                           │
-│ Giảm thời gian review từ 45 min → 20 min        │
-│                                                  │
-│ Quick gut: ☑ LLM Feature                         │
-└──────────────────────────────────────────────────┘
-```
-
-## Card #3 — Slack Search
-
-```text
-┌──────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #3                            │
-│                                                  │
-│ Bài toán: Tìm quyết định cũ trên Slack mất      │
-│ 10-15 phút, nhiều khi không tìm được             │
-│                                                  │
-│ Ai đang đau? Tất cả thành viên team (~12 người) │
-│                                                  │
-│ Workflow hiện tại:                                │
-│   1. Nhớ keyword → 2. Search Slack              │
-│   → 3. Scroll kết quả → 4. Đọc thread          │
-│   → 5. Xác nhận đúng context                    │
-│                                                  │
-│ Bước nào tốn nhất? Bước 3-4 (⏱ 10 min/lần)      │
-│                                                  │
-│ AI có thể giúp ở bước nào? Chưa rõ —            │
-│ cần index Slack history trước                    │
-│                                                  │
-│ Đo thành công bằng gì?                           │
-│ Tìm đúng quyết định trong < 2 phút              │
-│                                                  │
-│ Quick gut: ☑ Agent (cần RAG pipeline)            │
-└──────────────────────────────────────────────────┘
-```
-
-### Vì sao 3 cards này mạnh
-- Mỗi card đều có:
-  - actor,
-  - flow ngắn,
-  - bottleneck,
-  - metric có số,
-  - quick hypothesis về mức giải pháp
-- Card #3 rất hay vì **không chắc AI giúp ở đâu** — đây là dấu hiệu trung thực, không phải điểm yếu
-
-**[INDIVIDUAL SIGNAL]**
-Đây là chỗ người chấm nhìn ra học viên có hiểu “metric có số” hay chưa.
-Ví dụ tốt:
-- “90 phút → dưới 30 phút”
-- “< 2 phút”
-Ví dụ yếu:
-- “nhanh hơn”
-- “tốt hơn”
-- “đỡ mệt hơn”
-
----
-
-# Phase 3 — PITCH-CHALLENGE-VOTE
-
-## Minh pitch Card #1 cho nhóm
-
-Minh nói ngắn gọn:
-> “Mỗi thứ Hai tôi mất 90 phút tổng hợp report từ Jira + Sheets + Slack. Bước viết narrative tốn nhất vì phải tự tìm insight từ raw data. Nếu giải được bước này thì khả năng giảm hơn nửa thời gian.”
-
-## Nhóm challenge
-
-| Câu challenge | Trả lời của Minh |
-|---------------|-----------------|
-| “Rule/script đủ chưa? Có thật sự cần AI không?” | “Thu thập data ở bước 1-3 thì script đủ. Nhưng viết narrative cần diễn đạt tự nhiên, mỗi tuần khác nhau — rule không đủ.” |
-| “Ngoài bạn, ai đau nữa? Bao nhiêu người?” | “Team có 3 PM, tất cả đều viết report kiểu này mỗi tuần.” |
-| “Metric đo được không? Có số cụ thể chưa?” | “Có — từ 90 min xuống dưới 30 min. Và tỉ lệ trễ deadline từ 30% xuống 5%.” |
-
-## Vote kết quả
-Sau khi cả nhóm pitch xong: **3/4 phiếu cho Card #1**.
-
-## Cards bị loại
-
-| Card bị loại | Lý do |
-|--------------|-------|
-| #2 — Review PRD | Impact hẹp, khó đo quality improvement, metric yếu hơn |
-| #3 — Slack Search | Scope quá lớn cho lab, data access khó, chưa rõ feasibility |
-
-### Vì sao phần này quan trọng trong rubric mới
-Đây là phần **NO-AI**, nên rất hữu ích để phân biệt:
-- ai thật sự hiểu bài toán
-- ai chỉ đi theo nhóm
-
-**[INDIVIDUAL SIGNAL]**
-Một học viên được chấm cao ở phần này khi:
-- pitch rõ problem → workflow → bottleneck → metric
-- trả lời challenge không lảng tránh
-- chấp nhận kill card nếu hợp lý
-
-**[GROUP SIGNAL]**
-Một nhóm được chấm tốt khi:
-- không chọn bài trivial
-- không chọn bài “ngầu nhưng không làm nổi”
-- có kill rationale rõ ràng
-
----
-
-# Phase 4 — DEEP-DIVE
-
-## 4.1 — Current-State Workflow
+Luồng xử lý hàng tuần để cập nhật kiến thức từ các paper mới:
 
 ```text
 ┌─────────────┐     ┌─────────────┐     ┌──────────────┐     ┌──────────────────┐
 │ Bước 1      │     │ Bước 2      │     │ Bước 3       │     │ Bước 4           │
-│ Export Jira │     │ Lấy metrics │     │ Đọc Slack    │     │ Tổng hợp vào     │
-│ sprint data │     │ từ Google   │     │ recap tuần   │     │ Google Docs      │
-│             │ ──→ │ Sheets      │ ──→ │              │ ──→ │                  │
-│ Ai: PM      │     │ Ai: PM      │     │ Ai: PM       │     │ Ai: PM           │
-│ ⏱ 10 min    │     │ ⏱ 10 min    │     │ ⏱ 15 min     │     │ ⏱ 15 min         │
-│ In: Jira    │     │ In: Sheets  │     │ In: 3-5 Slack│     │ In: raw data     │
-│ Out: CSV    │     │ Out: bảng   │     │ Out: bullet  │     │ Out: draft bảng  │
+│ Tìm paper   │     │ Chọn 2-3    │     │ Đọc sâu và   │     │ So sánh với      │
+│             │ ──→ │ paper/tuần  │ ──→ │ tìm phần nổi │ ──→ │ phương pháp của  │
+│ Ai: Phong   │     │ Ai: Phong   │     │ bật          │     │ mình             │
+│ ⏱ 10 min    │     │ ⏱ 10 min   │     │ Ai: Phong    │     │ Ai: Phong       │
+│ In: ArXiv   │     │ In: 50+ ppr │     │ ⏱ 40 min 🔴 │     │ ⏱ 40 min 🔴    │
+│ Out: 50+ ppr│     │ Out: 2-3 ppr│     │ In: 2-3 ppr  │     │ In: Repo cá nhân │
 └─────────────┘     └─────────────┘     └──────────────┘     └──────────────────┘
                                                                       │
                                                                       ▼
-┌──────────────────┐     ┌──────────────────┐     ┌─────────────┐
-│ Bước 5           │     │ Bước 6           │     │ Bước 7      │
-│ Viết narrative   │     │ Self-review +    │     │ Gửi email   │
-│ (phân tích,      │ ──→ │ format           │ ──→ │ cho CEO +   │
-│ highlight,       │     │                  │     │ EM          │
-│ action items)    │     │ Ai: PM           │     │ Ai: PM      │
-│ Ai: PM           │     │ ⏱ 10 min         │     │ ⏱ 5 min     │
-│ ⏱ 25 min 🔴     │     │                  │     │             │
-└──────────────────┘     └──────────────────┘     └─────────────┘
+                                             ┌──────────────────┐     ┌──────────────────┐
+                                             │ Bước 6           │     │ Bước 5           │
+                                             │ Ghi lại và paste │ ─── │ Tóm tắt bản so   │
+                                             │ vào report       │     │ sánh             │
+                                             │ Ai: Phong        │     │ Ai: Phong        │
+                                             │ ⏱ 10 min         │     │ ⏱ 15 min         │
+                                             └──────────────────┘     └──────────────────┘
 
-🔴 = Bottleneck
-⏱ Tổng thời gian: 90 min/lần
+🔴 = Bottleneck (Điểm nghẽn)
+⏱ Tổng thời gian: ~125 phút / chu trình (trung bình ~90 phút để hoàn thành việc phân tích sâu 1 paper)
 ```
 
-### Ghi chú bottleneck
-- Bước 5 chiếm **28% tổng thời gian**
-- Đây là bước sáng tạo nhất
-- Hay bị “blank page syndrome”
-
-### Vì sao workflow này đạt điểm cao
-- Có đủ **7 bước**
-- Có thời gian mỗi bước
-- Có bottleneck rõ
-- Có thể đọc và hiểu bởi người ngoài nhóm
-
-**[GROUP SIGNAL]**
-Một workflow mạnh không chỉ là “đẹp”, mà phải giúp kéo ra được:
-- bottleneck thật
-- impact thật
-- nơi AI có thể chen vào
-- nơi AI không nên chen vào
+**Ghi chú bottleneck:**
+* Bước 3 và Bước 4 chiếm phần lớn thời gian (80 phút). Đọc sâu một tài liệu học thuật tiếng Anh để mò ra đúng phần Methodology cốt lõi rất dễ gây kiệt sức.
+* Việc đối chiếu chéo (cross-reference) giữa các kỹ thuật trong paper mới với cấu trúc của repo cá nhân đòi hỏi sự tập trung cao độ, dễ bị "ngợp" thông tin.
 
 ---
 
-## 4.2 — Problem Statement (6-field)
+### 4.2 Problem Statement & Metrics (6-field)
 
 | Field | Nội dung |
 |-------|----------|
-| **Actor / Operator** | Junior PM tại công ty SaaS 50 người, chịu trách nhiệm weekly report cho leadership |
-| **Current Workflow** | Mỗi thứ Hai: export Jira → lấy metrics từ Sheets → đọc Slack recap → tổng hợp → viết narrative → review → gửi email. 7 bước, 90 phút, hoàn toàn thủ công |
-| **Bottleneck** | Bước viết narrative mất 25 phút vì phải tự phân tích trend từ raw data, diễn đạt lại thành insight cho leadership đọc nhanh |
-| **Impact** | 90 phút/tuần = ~78 giờ/năm cho 1 PM. Team có 3 PM → ~234 giờ/năm. 30% tuần report bị trễ deadline |
-| **Success Metric** | Giảm tổng thời gian từ 90 phút xuống dưới 30 phút. Tỉ lệ trễ deadline từ 30% xuống dưới 5% |
-| **Operational Boundary** | AI được phép draft narrative từ data có sẵn. AI không được tự gửi report, không được bịa số liệu, PM phải review trước khi gửi |
+| **Actor / Operator** | Phong (Sinh viên nghiên cứu). |
+| **Current Workflow** | Tìm paper trên ArXiv → Chọn lọc 2-3 paper → Đọc sâu tìm Methodology → Đối chiếu kỹ thuật với repo cá nhân → Tóm tắt → Ghi report. Tổng cộng 6 bước, thủ công 100%. |
+| **Bottleneck** | Bước 3 & 4: Đọc sâu paper tiếng Anh và đối chiếu kiến trúc chiếm tới 80 phút. Các paper thường rất dài và rườm rà, khó tìm nhanh phần trọng tâm về Visual Question Answering (VQA). |
+| **Impact** | Mất quá nhiều thời gian (3-4 tiếng mỗi tuần chỉ để xử lý vài paper), làm chậm tiến độ viết code, chạy experiment và hoàn thiện report nghiên cứu. |
+| **Success Metric** | Giảm tổng thời gian đọc hiểu và so sánh 1 paper từ 90 phút xuống **dưới 20 phút**. |
+| **Operational Boundary** | AI được phép đọc file PDF và nhận context của model Moondream2 để tóm tắt và trích xuất. AI **KHÔNG** được tự ý bịa ra (hallucinate) các phương pháp không có trong paper. Phong phải là người đọc và duyệt lại bản tóm tắt cuối cùng trước khi đưa vào report. |
 
-### Sub-goals Decomposition
+**Sub-goals Decomposition:**
+* *TRƯỚC khi dùng AI:* Lọc và tải đúng file PDF của paper cần đọc. Soạn sẵn một file text mô tả ngắn gọn kiến trúc hiện tại để làm "System Prompt" cho AI.
+* *TRONG khi dùng AI:* Review các điểm methodology mà AI trích xuất để đảm bảo không bỏ sót keyword quan trọng về VQA.
 
-**TRƯỚC khi dùng AI**
-- Set up API connection tới Jira, Sheets, Slack
-- Tạo prompt template đúng format report
+**Metrics:**
 
-**TRONG khi dùng AI**
-- PM review AI draft để bắt lỗi
-- PM quyết định giữ/bỏ/sửa từng section
-
-### Metrics
-
-| Loại | Metric | Ngưỡng |
+| Loại | Metric | Ngưỡng (Threshold) |
 |------|--------|--------|
-| Efficiency | Tổng thời gian làm weekly report | 90 min → dưới 30 min |
-| Quality | Tỉ lệ CEO yêu cầu sửa/hỏi thêm | Không tăng quá mức hiện tại |
-
-### Vì sao PS này mạnh
-- Cụ thể đúng **1 workflow**
-- Có impact định lượng
-- Có boundary rõ
-- Metric có thể dùng để ra quyết định
-
-**[GROUP SIGNAL]**
-Đây là phần dễ kéo điểm nhóm lên hoặc kéo tụt mạnh nhất.
-PS yếu thường có 3 lỗi:
-1. scope quá rộng,
-2. metric không có ngưỡng,
-3. boundary không rõ.
+| **Efficiency (Thời gian)** | Thời gian đọc sâu, so sánh và tóm tắt 1 paper | 90 phút → < 20 phút |
+| **Quality (Chất lượng)** | Tỉ lệ trích xuất đúng phương pháp cốt lõi | Không bỏ sót thông tin quan trọng (Review thủ công đạt 100% khớp ý tưởng) |
 
 ---
 
-## 4.3 — Research
+### 4.3 Research
 
-### Existing solution
-- **Recapped.io / fellow.app / weekly report templates**
-- mạnh ở phần thu thập data
-- yếu ở phần viết insight
+**Existing solution:**
+* **ChatPDF / SciSpace:**
+    * *Điểm mạnh:* Cho phép upload PDF và hỏi đáp trực tiếp, tìm thông tin cực nhanh.
+    * *Điểm yếu:* Thiếu context cá nhân. Các công cụ này chỉ hiểu nội dung trong paper đó, không tự động biết "phương pháp của mình" là gì để đối chiếu sâu trừ khi phải prompt rất dài và thủ công mỗi lần.
 
-### Case study
-- **Stripe internal reporting**
-- LLM generate summary từ structured data
-- PM review trước khi gửi
-- giảm 60% thời gian viết report
+**Case study:**
+* **Dùng LLM có Context Window lớn (Gemini 1.5 Pro / Claude 3.5 Sonnet):**
+    * *Họ làm gì:* Upload trực tiếp file PDF của paper cùng với file `README.md` hoặc tài liệu mô tả kiến trúc vào chung một phiên chat. Yêu cầu LLM đóng vai trò Research Assistant, trích xuất Methodology và lập bảng so sánh điểm khác biệt.
+    * *Kết quả:* LLM thực hiện so sánh đối chiếu kỹ thuật (như cơ chế Attention, cách encode ảnh/text) cực kỳ chính xác.
 
-### Quick poll
-- 2/3 PM ngoài nhóm nói họ cũng mất nhiều thời gian tương tự
-- 1 người nói dùng template thì đỡ format, nhưng vẫn đau ở narrative
-
-### Vì sao research này đạt điểm tốt
-- Không chỉ tìm “tool”
-- Có **existing solution**
-- Có **case study**
-- Có **quick poll**
-- Có **bài học rút ra cho bài toán nhóm mình**
-
-**[GROUP SIGNAL]**
-Research tốt không phải là copy tên công cụ AI, mà là:
-- biết trên thị trường đã có gì
-- biết khoảng trống thật ở đâu
-- biết vì sao nên buy / boost / build
+**Bài học rút ra cho bài toán của mình:**
+Không cần xây dựng hệ thống phức tạp, chỉ cần thiết kế một **Prompt Template** chuẩn, đính kèm file PDF và context của Moondream2. Giải pháp là **LLM Feature (Boost)**.
 
 ---
 
-## 4.4 — Future-State Flow + AI Fit
+### 4.4 Future-State Flow + AI Fit
 
-### AI Fit Check
-Bài toán nằm ở:
-**Complexity thấp + Ambiguity cao → LLM Feature**
+**1. AI Fit Check:**
+Bài toán nằm ở ô: **Complexity thấp + Ambiguity cao → LLM Feature**
+*(Workflow chỉ là nhét text vào và lấy text ra (complexity thấp), nhưng việc tóm tắt và so sánh kỹ thuật học thuật đòi hỏi khả năng xử lý ngôn ngữ và suy luận sâu (ambiguity cao)).*
 
-### AI Suitability Check
-Tick thiên về bên **phù hợp**, nhưng không tuyệt đối:
-- cần NLP
-- output đa dạng tốt hơn cố định
-- vẫn có một điểm “không phù hợp” là cần output khá nhất quán
-
-### UX Check
-Nếu AI draft sai:
-- PM sửa trực tiếp
-- tệ nhất thì PM bỏ draft và viết lại
-
-## Future-State Flow
+**2. Future-State Flow:**
 
 ```text
-┌─────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│ Bước 1      │     │ Bước 2           │     │ Bước 3           │
-│ 🔵 Auto-pull│ ──→ │ 🔵 AI tổng hợp  │ ──→ │ 🔵 AI draft      │
-│ data        │     │ data             │     │ narrative        │
-└─────────────┘     └──────────────────┘     └──────────────────┘
+┌─────────────┐     ┌─────────────┐       ┌──────────────────┐
+│ Bước 1      │     │ Bước 2      │       │ Bước 3           │
+│ Tìm & Chọn  │ ──→ │ 🔵 AI đọc    │  ──→ │ 🔵 AI đối chiếu với │
+│ 2-3 paper   │     │ paper & trích│      │ phương pháp của  │
+│ Ai: Phong   │     │ xuất phần nổi bật │  │ mình           │
+│ ⏱ 20 min    │     │ ⏱ 5-10 min      │   │ ⏱ 5-10 min       │
+└─────────────┘     └─────────────┘        └──────────────────┘
                                                       │
                                                       ▼
-┌──────────────────┐     ┌─────────────┐
-│ Bước 4           │     │ Bước 5      │
-│ 🟢 PM review     │ ──→ │ 🟢 PM gửi   │
-│ + edit           │     │ email       │
-│ 🔴 Boundary:     │     │             │
-│ phải approve     │     │             │
-└──────────────────┘     └─────────────┘
-
-➡️ Fallback: AI draft kém → PM tự viết lại
+                    ┌─────────────┐     ┌──────────────────┐
+                    │ Bước 5      │     │ Bước 4           │
+                    │ Paste vào   │ ─── │ 🟢 tóm tắt      │
+                    │ Report      │     │                  │
+                    │ Ai: Phong   │     │ Ai: Phong        │
+                    │ ⏱ 5 min     │     │ ⏱ 10 min        │
+                    └─────────────┘     └──────────────────┘
+                    
+➡️ Fallback: Nếu AI tóm tắt sai lệch hoặc tối nghĩa →  tự mở PDF ra đọc phần Methodology (nhưng ít nhất AI đã chỉ ra nó nằm ở trang nào, vẫn tiết kiệm thời gian).
 ```
+*Tổng thời gian mới cho việc xử lý 1 paper (sau khi đã chọn): ~20-25 phút (Giảm từ 90 phút).*
 
-### AI Fit Decision
-**Chốt: LLM Feature**
-
-**Vì sao không phải Agent**
-1. workflow tuyến tính
-2. không cần planning nhiều bước động
-3. chỉ một phần cần AI, phần còn lại script/rule đủ
-
-### Underspecification Check
+**3. Underspecification Check:**
 
 | Điều chưa rõ | Hậu quả | Cách tìm ra |
 |---|---|---|
-| “Narrative đủ tốt” nghĩa là gì? | PM vẫn phải viết lại gần hết | Pilot 2 tuần, đo thời gian edit |
-| CEO đọc narrative hay chỉ nhìn bảng số? | Nếu chỉ nhìn số → không cần LLM | Hỏi trực tiếp CEO |
-| API có truy cập được không? | Không build được automation | Check với IT |
-
-### Vì sao phần này mạnh
-- Không mặc định Agent
-- Có so sánh alternatives
-- Có fallback
-- Có boundary
-- Có thoughtfulness về unknowns
-
-**[GROUP SIGNAL]**
-Đây là khu vực phân biệt nhóm “hiểu khá” với nhóm “hiểu đầy đủ”.
-Nhóm mạnh thường:
-- nói rõ vì sao **chưa cần agent**
-- chỉ ra được **fallback**
-- viết được **underspecification** thay vì giả vờ mọi thứ đã rõ
+| AI có nhầm lẫn thuật ngữ của paper với các mô hình khác không? | Tóm tắt sai kiến trúc, dẫn đến so sánh sai lệch | Đọc chéo lại Abstract của paper trong 2 phút để verify output của AI. |
+| Độ dài của paper vượt quá context limit? | Báo lỗi hoặc AI cắt bớt thông tin quan trọng ở phần sau. | Sử dụng các mô hình hỗ trợ >100k tokens. |
 
 ---
 
-# Phase 5 — EVALUATE
+## Phase 5 — EVALUATE (Đánh giá & Quyết định)
 
-## AI Readiness Checklist
+### G4. Decision Quality
+
+**AI Readiness Checklist:**
 
 | # | Câu hỏi | Kết quả | Ghi chú |
 |---|---------|---------|---------|
-| 1 | Có data/input đủ chất lượng? | Yes | Jira, Sheets, Slack có data |
-| 2 | Có metric rõ? | Yes | 90→30 min; 30%→5% |
-| 3 | Sai thì hậu quả có chấp nhận được? | Yes | PM review được |
-| 4 | User sẵn sàng dùng AI? | Yes | PM rất muốn giảm thời gian |
-| 5 | Có resource để maintain? | Not Yet | Cần dev resource |
+| 1 | Có data/input đủ chất lượng? | **Yes** | File PDF paper từ ArXiv rất chuẩn, text extract dễ dàng. |
+| 2 | Có metric rõ? | **Yes** | 90 phút → ~25 phút. |
+| 3 | Sai thì hậu quả có chấp nhận được? | **Yes** | Phong là người review cuối, sai thì tự đọc lại, rủi ro có thể chấp nhận. |
+| 4 | User sẵn sàng dùng AI? | **Yes** | Phong rất muốn thoát khỏi việc đọc chữ chay. |
+| 5 | Có resource để maintain? | **Yes** | Chỉ cần dùng Web UI của các AI sẵn có (Gemini/ChatGPT/Claude), không cần code app riêng. |
 
-## Optimization Check
+**Optimization Check:**
+* **Lợi ích:** Tiết kiệm ~70 phút cho mỗi paper. Có thêm thời gian để tập trung vào việc implement code.
+* **Rủi ro:** AI "hallucinate" ra các layer hoặc loss function không có trong paper để cố làm cho bài so sánh trông logic.
 
-**Lợi ích**
-- Tiết kiệm ~60 phút/tuần
-- Report đến leadership đúng giờ hơn
+**Quyết định:**
+**GO (Thực hiện ngay lập tức)**
 
-**Rủi ro nếu optimize sai**
-- AI summary nhàn nhạt, bỏ sót trend quan trọng
-- AI hallucinate insight không có trong data
-
-## Quyết định
-**Go (với scope nhỏ)**
-
-### Justify
-- Có 4/5 điều kiện đủ
-- có thể bắt đầu bằng pilot thủ công trước
-- điều kiện thiếu là dev resource, không phải problem sai
-
-### Nếu pilot thất bại
-- quay về Not Yet
-- hoặc hạ xuống Rule + template + automation
-
-### Vì sao quyết định này tốt
-Một quyết định tốt không nhất thiết phải “Go to production”.
-Ở đây, quyết định tốt là:
-- **Go nhưng scope nhỏ**
-- biết điều gì cần validate trước
-- có đường lui nếu assumption sai
-
-**[GROUP SIGNAL]**
-Đây là phần coach/người chấm nhìn vào để xác định nhóm có “trưởng thành” hay không.
-
----
-
-# Phase 6 — AI Support Log (Log Phase Reflection)
-
-| Câu hỏi | Trả lời |
-|---------|---------|
-| AI giúp gì? | Research, brainstorm thêm 3 problems, digitize flow |
-| AI sai ở đâu? | Viết PS quá chung, metric vô nghĩa kiểu “nhanh hơn” |
-| Nhóm phải sửa gì bằng tay? | Tự đo thời gian thật, tự hỏi stakeholder, sửa số liệu và boundary |
-| Prompt hay nhất? | “Hãy phân tích workflow này thành 5-8 bước, ghi thời gian mỗi bước, và chỉ ra bottleneck lớn nhất.” |
-
-### Vì sao AI Support Log này tốt
-- Không khoe dùng AI nhiều
-- Không copy output AI
-- Có honest reflection
-- Chỉ rõ AI sai ở đâu và con người sửa gì
-
-**[INDIVIDUAL SIGNAL]**
-Đây là chỗ rất tốt để phân biệt:
-- người học thật sự hiểu
-- với người chỉ “nhờ AI làm hộ”
-
----
-
-# Vì sao bài ví dụ này sẽ đạt điểm cao theo rubric mới
-
-## Điểm cá nhân
-Bài này mạnh ở:
-- scan breadth tốt
-- quick cards có metric cụ thể
-- pitch/challenge trả lời được bằng evidence
-- AI Support Log trung thực
-
-## Điểm nhóm
-Bài này mạnh ở:
-- workflow rõ
-- PS chặt
-- AI fit không overclaim
-- research có chiều sâu
-- quyết định Go nhỏ, không liều
-
-## Mức năng lực dự kiến
-Bài này nên nằm ở mức:
-
-**Hiểu đầy đủ** hoặc **gần Hiểu xuất sắc**
-
-vì:
-- problem framing rất rõ
-- không solution-first
-- biết chọn **LLM Feature** thay vì Agent
-- có pilot thinking
-- có fallback và unknowns
-
-Nó chưa chắc tuyệt đối xuất sắc vì vẫn còn một số assumption cần validate thật ngoài lab, nhưng đó lại chính là điều làm bài này thực tế và đáng tin.
-
----
-
-# Hướng dẫn nộp bài
-
-```text
-MaHocVien-HoTen-day02.zip
-├── 01-problem-scan.md
-├── 02-deep-dive-report.md
-├── 03-ai-log.md          ← log Phase 6 Reflection
-├── 04-workflow-diagram.png/pdf
-└── extras/
-```
-
-### Lưu ý
-- Mỗi người nộp **1 zip riêng**
-- File `01` và `03` là **cá nhân**
-- File `02` và `04` là **nhóm**
-- Có thể nộp thêm screenshot AI conversation trong `extras/`, nhưng **không bắt buộc**
-
----
-
-# Chốt thông điệp
-
-Một bài nộp mạnh của Ngày 2 **không phải** bài:
-- nghe “agentic” nhất,
-- hay phức tạp nhất.
-
-Một bài nộp mạnh là bài:
-- chọn đúng problem,
-- vẽ đúng workflow,
-- viết đúng metric,
-- chọn đúng mức AI,
-- và ra được quyết định trung thực.
-
-**Problem first, not AI first.**
+**Justify (Lý do):**
+Bài toán đáp ứng 5/5 tiêu chí Readiness. Rủi ro tác động kinh doanh/vận hành là bằng không do đây là workflow cá nhân (research). Chỉ cần tạo một Prompt Template cố định và áp dụng ngay trong tuần tới để đo lường thực tế xem thời gian có giảm đúng xuống ~25 phút như kỳ vọng hay không.
