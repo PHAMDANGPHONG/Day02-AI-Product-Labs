@@ -1,5 +1,5 @@
 # Deliverable 2: 02-deep-dive-report.md
-**Bài toán:** Đọc, trích xuất Methodology từ Paper tiếng Anh và đối chiếu với model Moondream2
+**Bài toán:** Đọc 2-3 paper tiếng Anh mỗi tuần, mất rất nhiều thời gian để chắt lọc ra phương pháp luận và đối chiếu với mô hình đang làm.
 
 ---
 
